@@ -34,9 +34,9 @@ notes.post('/', (req, res) => {
     const noteString = JSON.stringify(newNote);
 
     //write the string to file
-    fs.appendFile(dbNotes, noteString, (err) => {
+    fs.appendFile(`./db/db.json`, noteString, (err) => {
       err
-        ? console.err(err)
+        ? console.error(err)
         : console.log(
             `Review for ${newNote.title} has been written to JSON file`
           );
