@@ -31,16 +31,33 @@ notes.post('/', (req, res) => {
     };
 
     // Convert the data to a string so we can save it
-    const noteString = JSON.stringify(newNote);
+    const newNoteStr = JSON.stringify(newNote);
+
+    //Read Existing file
+    fs.readFile('./db/db.json', 'utf-8', (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        // Convert string into JSON object
+        const existingNotesStr = JSON.parse(data);
+
+        //Add a new note
+        existingNotesStr.push(newNoteStr);
+      }
+    });
 
     //write the string to file
-    fs.appendFile(`./db/db.json`, noteString, (err) => {
-      err
-        ? console.error(err)
-        : console.log(
-            `Review for ${newNote.title} has been written to JSON file`
-          );
-    });
+    fs.writeFile(
+      './db/db.json',
+      JSON.stringify(existingNotesStr, null, 4),
+      (err) => {
+        err
+          ? console.error(err)
+          : console.log(
+              `Review for ${newNote.title} has been written to JSON file`
+            );
+      }
+    );
 
     // Log the response body to the console
     const response = {
