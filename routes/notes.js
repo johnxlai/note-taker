@@ -30,9 +30,6 @@ notes.post('/', (req, res) => {
       uniqidId: uniqid(),
     };
 
-    // Convert the data to a string so we can save it
-    const newNoteStr = JSON.stringify(newNote);
-
     //Read Existing file
     fs.readFile('./db/db.json', 'utf-8', (err, data) => {
       if (err) {
@@ -42,23 +39,22 @@ notes.post('/', (req, res) => {
         const existingNotesStr = JSON.parse(data);
 
         //Add a new note
-        existingNotesStr.push(newNoteStr);
+        existingNotesStr.push(newNote);
+        //write the string to file
+        fs.writeFile(
+          './db/db.json',
+          //stringify notes again and add replacer as null, and add 4 space
+          JSON.stringify(existingNotesStr, null, 4),
+          (err) => {
+            err
+              ? console.error(err)
+              : console.log(
+                  `Review for ${newNote.title} has been written to JSON file`
+                );
+          }
+        );
       }
     });
-
-    //write the string to file
-    fs.writeFile(
-      './db/db.json',
-      //stringify notes again and add replacer as null, and add 4 space
-      JSON.stringify(existingNotesStr, null, 4),
-      (err) => {
-        err
-          ? console.error(err)
-          : console.log(
-              `Review for ${newNote.title} has been written to JSON file`
-            );
-      }
-    );
 
     // Log the response body to the console
     const response = {
