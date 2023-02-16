@@ -49,6 +49,7 @@ notes.post('/', (req, res) => {
     //write the string to file
     fs.writeFile(
       './db/db.json',
+      //stringify notes again and add replacer as null, and add 4 space
       JSON.stringify(existingNotesStr, null, 4),
       (err) => {
         err
