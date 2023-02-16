@@ -1,5 +1,7 @@
 const notes = require('express').Router();
 const dbNotes = require('../db/db.json');
+const fs = require('fs');
+
 //unique id npm package
 const uniqid = require('uniqid');
 
@@ -27,12 +29,26 @@ notes.post('/', (req, res) => {
       text,
       uniqidId: uniqid(),
     };
+
+    // Convert the data to a string so we can save it
+    const noteString = JSON.stringify(newNote);
+
+    //write the string to file
+    fs.appendFile(dbNotes, noteString, (err) => {
+      err
+        ? console.err(err)
+        : console.log(
+            `Review for ${newNote.title} has been written to JSON file`
+          );
+    });
+
     // Log the response body to the console
     const response = {
       status: 'success',
       body: newNote,
     };
     console.log(response);
+
     res.json(`Review for has been added!`);
     // res.status(201).json(response);
   } else {
