@@ -1,23 +1,19 @@
 const notes = require('express').Router();
-const dbNotes = require('../db/db.json');
+// const dbNotes = require('../db/db.json');
 const fs = require('fs');
 
 //unique id npm package
 const uniqid = require('uniqid');
 
-// fs.readFile('data.csv', 'utf8', (error, data) =>
-//   error ? console.error(error) : console.log(data)
-// );
-
 //Get Routes for retrieving all notes
 notes.get('/', (req, res) => {
-  //read file
+  //read db file again
   fs.readFile('./db/db.json', 'utf-8', (err, data) => {
     if (err) {
       console.error(err);
     } else {
+      res.json(JSON.parse(data));
     }
-    res.json(JSON.parse(data));
   });
 });
 
