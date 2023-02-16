@@ -11,9 +11,14 @@ const uniqid = require('uniqid');
 
 //Get Routes for retrieving all notes
 notes.get('/', (req, res) => {
-  res.status(200).json(dbNotes);
-  // console.log(dbNotes);
-  // return res.json(dbNotes);
+  //read file
+  fs.readFile('./db/db.json', 'utf-8', (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+    }
+    res.json(JSON.parse(data));
+  });
 });
 
 //Post route for a new note
@@ -22,6 +27,7 @@ notes.post('/', (req, res) => {
   console.info(`${req.method} request received to add a note`);
   const { title, text, uniqidId = 0 } = req.body;
 
+  let existingNotesStr;
   //Check if anything is in body and title text is available
   if (req.body && title && text) {
     const newNote = {
@@ -36,7 +42,7 @@ notes.post('/', (req, res) => {
         console.error(err);
       } else {
         // Convert string into JSON object
-        const existingNotesStr = JSON.parse(data);
+        existingNotesStr = JSON.parse(data);
 
         //Add a new note
         existingNotesStr.push(newNote);
@@ -61,15 +67,15 @@ notes.post('/', (req, res) => {
       status: 'success',
       body: newNote,
     };
-    console.log(response);
+    // console.log(response);
 
-    res.json(`Review for has been added!`);
     // res.status(201).json(response);
+    // console.log(existingNotesStr);
+    return res.json(newNote);
   } else {
     res.status(500).json(`Error in posting notes`);
   }
   // Log the response body to the console
-  // console.log(req.body);
 });
 
 //post route to add new note to data
