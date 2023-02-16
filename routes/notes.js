@@ -17,49 +17,30 @@ notes.get('/', (req, res) => {
 //Post route for a new note
 notes.post('/', (req, res) => {
   //Grab details from existing notes
-  console.info(`${req.method} request received to add a review`);
+  console.info(`${req.method} request received to add a note`);
+  const { title, text, uniqidId = 0 } = req.body;
 
-  // Prepare a response object to send back to the client
-  let response;
-
-  // Check if there is anything in the response body
-  if (req.body) {
-    response = {
-      status: 'success',
-      data: req.body,
+  if (req.body && title && text) {
+    const newNote = {
+      title,
+      text,
+      uniqidId: uniqid(),
     };
+    // Log the response body to the console
+    const response = {
+      status: 'success',
+      body: newNote,
+    };
+    console.log(response);
     res.json(`Review for  has been added!`);
   } else {
-    res.json('Request body must at least contain a product name');
+    res.status(500).json(`Error in posting notes`);
   }
-
   // Log the response body to the console
-  console.log(req.body);
-
-  // console.info(`${req.method} request received to add a review`);
-
-  // const { title, text, uniqidId = 0 } = req.body;
   // console.log(req.body);
-  // if (req.body && title && text) {
-  //   const newNote = {
-  //     title,
-  //     text,
-  //     uniqidId: uniqid(),
-  //   };
-  //   // Log the response body to the console
-  //   const response = {
-  //     status: 'success',
-  //     body: newNote,
-  //   };
-  //   console.log(response);
-
-  //res.status(500).json(`Error in posting notes`);
-
-  // Log our request to the terminal
-  console.info(`${req.method} request received to add a note`);
 });
 
 //post route to add new note to data
-notes.post('/', (req, res) => {});
+// notes.post('/', (req, res) => {});
 
 module.exports = notes;
