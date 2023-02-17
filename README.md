@@ -5,7 +5,7 @@
 As a small business owner I want to be able to write and save notes, so that I can organize my thoughts and keep track of tasks I need to complete.
 
 ## Description
-* This is a note taker app build on express.js. The Users can create and save existing notes. The notes will be saved in the databases.
+* This is a note taker app build on express.js. The users can create new notes, save and view or delete existing notes. The notes are saved in the databases.
 
 * This project uses the express and uniqid.
 
