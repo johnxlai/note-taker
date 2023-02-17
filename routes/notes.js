@@ -4,11 +4,13 @@ const fs = require('fs');
 //unique id npm package
 const uniqid = require('uniqid');
 
+// Readfile function returns an array
 const getNotes = () => {
   var noteStr = fs.readFileSync('./db/db.json', 'utf-8');
   return JSON.parse(noteStr);
 };
 
+//Write notes function returns nothing, just write to file
 const writeNotes = (existingNotesStr) => {
   fs.writeFileSync(
     './db/db.json',
@@ -22,6 +24,7 @@ router.get('/', (req, res) => {
   res.json(getNotes());
 });
 
+//Delete routes for selected ids
 router.delete('/:id', (req, res) => {
   let notes = getNotes();
   notes = notes.filter((note) => note.uniqidId !== req.params.id);
