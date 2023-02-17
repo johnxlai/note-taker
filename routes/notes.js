@@ -63,18 +63,11 @@ notes.post('/', (req, res) => {
       status: 'success',
       body: newNote,
     };
-    // console.log(response);
 
-    // res.status(201).json(response);
-    // console.log(existingNotesStr);
     return res.json(newNote);
   } else {
     res.status(500).json(`Error in posting notes`);
   }
-  // Log the response body to the console
 });
-
-//post route to add new note to data
-// notes.post('/', (req, res) => {});
 
 module.exports = notes;
