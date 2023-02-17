@@ -1,5 +1,4 @@
 const notes = require('express').Router();
-// const dbNotes = require('../db/db.json');
 const fs = require('fs');
 
 //unique id npm package
