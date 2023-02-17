@@ -1,19 +1,37 @@
 # Note Taker
+![License Badge](https://img.shields.io/badge/license-MIT-brightgreen)
 
-## AS A small business owner
-I WANT to be able to write and save notes
-SO THAT I can organize my thoughts and keep track of tasks I need to complete
+## User Story
+As a small business owner I want to be able to write and save notes, so that I can organize my thoughts and keep track of tasks I need to complete.
 
-## GIVEN a note-taking application
-WHEN I open the Note Taker
-THEN I am presented with a landing page with a link to a notes page
-WHEN I click on the link to the notes page
-THEN I am presented with a page with existing notes listed in the left-hand column, plus empty fields to enter a new note title and the note’s text in the right-hand column
-WHEN I enter a new note title and the note’s text
-THEN a Save icon appears in the navigation at the top of the page
-WHEN I click on the Save icon
-THEN the new note I have entered is saved and appears in the left-hand column with the other existing notes
-WHEN I click on an existing note in the list in the left-hand column
-THEN that note appears in the right-hand column
-WHEN I click on the Write icon in the navigation at the top of the page
-THEN I am presented with empty fields to enter a new note title and the note’s text in the right-hand column
+## Description
+* This is a note taker app build on express.js. The Users can create and save existing notes. The notes will be saved in the databases.
+
+* This project uses the express and uniqid.
+
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [How to Contribute](#how-to-contribute)
+- [Questions](#questions)
+- [License](#license)
+
+## Installation
+* If you want to test it locally In the root directory you want to run "npm i" to install all the required packages.
+
+## Usage
+*  Users will start on the landing page which leads the user to notes pages. In the notes page user can add and remove notes as they like. The Notes will be saved to the database. When you click on an existing note on the left column, the selected note will show up on the right column.
+## License
+* This project is under the MIT license.
+* If you want to get more details about the license, please visit [Choose License](https://choosealicense.com "Choose License")
+
+## How to Contribute
+* Feel free to contact via email or github or fork my repo and request for pull request!
+
+## Tests
+* None available.
+
+## Questions
+* Please contact me via my [Github](https://github.com/johnxlai)
+
+* You can reach me with additional questions <a href="mailto:lai.john.py@gmail.com">lai.john.py@gmail.com</a>
