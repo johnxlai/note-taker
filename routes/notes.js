@@ -1,23 +1,33 @@
-const notes = require('express').Router();
+const router = require('express').Router();
 const fs = require('fs');
 
 //unique id npm package
 const uniqid = require('uniqid');
 
+const getNotes = () => {
+  var noteStr = fs.readFileSync('./db/db.json', 'utf-8');
+  return JSON.parse(noteStr);
+};
+
+const writeNotes = (existingNotesStr) => {
+  fs.writeFileSync(
+    './db/db.json',
+    //stringify notes again and add replacer as null, and add 4 space
+    JSON.stringify(existingNotesStr, null, 4)
+  );
+};
+
 //Get Routes for retrieving all notes
-notes.get('/', (req, res) => {
-  //read db file again
-  fs.readFile('./db/db.json', 'utf-8', (err, data) => {
-    if (err) {
-      console.error(err);
-    } else {
-      res.json(JSON.parse(data));
-    }
-  });
+router.get('/', (req, res) => {
+  res.json(getNotes());
 });
 
+// router.delete('/:id', (req, res) => {
+
+// });
+
 //Post route for a new note
-notes.post('/', (req, res) => {
+router.post('/', (req, res) => {
   //Grab details from existing notes
   console.info(`${req.method} request received to add a note`);
   const { title, text, uniqidId = 0 } = req.body;
@@ -31,37 +41,13 @@ notes.post('/', (req, res) => {
       uniqidId: uniqid(),
     };
 
-    //Read Existing file
-    fs.readFile('./db/db.json', 'utf-8', (err, data) => {
-      if (err) {
-        console.error(err);
-      } else {
-        // Convert string into JSON object
-        existingNotesStr = JSON.parse(data);
+    // Convert string into JSON object
+    existingNotesStr = getNotes();
 
-        //Add a new note
-        existingNotesStr.push(newNote);
-        //write the string to file
-        fs.writeFile(
-          './db/db.json',
-          //stringify notes again and add replacer as null, and add 4 space
-          JSON.stringify(existingNotesStr, null, 4),
-          (err) => {
-            err
-              ? console.error(err)
-              : console.log(
-                  `Review for ${newNote.title} has been written to JSON file`
-                );
-          }
-        );
-      }
-    });
-
-    // Log the response body to the console
-    const response = {
-      status: 'success',
-      body: newNote,
-    };
+    //Add a new note
+    existingNotesStr.push(newNote);
+    //write the string to file
+    writeNotes(existingNotesStr);
 
     return res.json(newNote);
   } else {
@@ -69,4 +55,4 @@ notes.post('/', (req, res) => {
   }
 });
 
-module.exports = notes;
+module.exports = router;
