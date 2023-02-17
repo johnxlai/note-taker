@@ -22,9 +22,12 @@ router.get('/', (req, res) => {
   res.json(getNotes());
 });
 
-// router.delete('/:id', (req, res) => {
-
-// });
+router.delete('/:id', (req, res) => {
+  let notes = getNotes();
+  notes = notes.filter((note) => note.uniqidId !== req.params.id);
+  writeNotes(notes);
+  res.status(200).send();
+});
 
 //Post route for a new note
 router.post('/', (req, res) => {
